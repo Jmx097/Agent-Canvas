@@ -1,0 +1,71 @@
+2025-11-18 22:30:43,842 - personal_os - INFO - Verifying Personal OS Foundation...
+2025-11-18 22:30:43,848 - personal_os - INFO - Starting agent: TestAgent
+2025-11-18 22:30:43,858 - personal_os - INFO - Test Agent is running logic...
+2025-11-18 22:30:44,861 - personal_os - INFO - Test Agent logic done.
+2025-11-18 22:30:44,864 - personal_os - INFO - Agent TestAgent completed successfully.
+2025-11-18 22:30:44,882 - personal_os - INFO - Verification complete. Check personal_os.db and personal_os.log
+2025-11-18 22:31:25,801 - personal_os - INFO - Starting agent: Job Scout
+2025-11-18 22:31:25,820 - personal_os - INFO - Fetched 3 jobs.
+2025-11-18 22:31:25,824 - personal_os - INFO - Scored job 'Solutions Consultant': 65 (NEW)
+2025-11-18 22:31:25,826 - personal_os - INFO - Scored job 'Senior Sales Engineer': 10 (REJECTED)
+2025-11-18 22:31:25,828 - personal_os - INFO - Scored job 'Implementation Specialist': 65 (NEW)
+2025-11-18 22:31:25,837 - personal_os - INFO - Job Scout finished. Processed 3 new jobs.
+2025-11-18 22:31:25,839 - personal_os - INFO - Agent Job Scout completed successfully.
+2025-11-18 22:31:54,168 - personal_os - INFO - Starting agent: Thread Spotter
+2025-11-18 22:31:54,190 - personal_os - INFO - Fetched 3 threads.
+2025-11-18 22:31:54,194 - personal_os - INFO - Scored thread 'How do I automate client onboarding without coding?': 50 (NEW)
+2025-11-18 22:31:54,195 - personal_os - INFO - Scored thread 'Crypto is the future! Buy now!': 0 (REJECTED)
+2025-11-18 22:31:54,197 - personal_os - INFO - Scored thread 'Best way to structure a Make.com scenario for error handling?': 50 (NEW)
+2025-11-18 22:31:54,207 - personal_os - INFO - Thread Spotter finished. Processed 3 new threads.
+2025-11-18 22:31:54,209 - personal_os - INFO - Agent Thread Spotter completed successfully.
+2025-11-18 22:32:35,981 - personal_os - INFO - Starting agent: Orchestrator
+2025-11-18 22:32:36,002 - personal_os - INFO - Orchestrator found 2 new jobs and 2 new threads.
+2025-11-18 22:32:36,006 - personal_os - INFO - Daily plan generated at data/daily_plan.md
+2025-11-18 22:32:36,008 - personal_os - INFO - Agent Orchestrator completed successfully.
+2025-11-18 22:33:56,747 - personal_os - INFO - Running all agents...
+2025-11-18 22:33:56,752 - personal_os - INFO - Starting agent: Job Scout
+2025-11-18 22:33:56,776 - personal_os - INFO - Fetched 3 jobs.
+2025-11-18 22:33:56,783 - personal_os - INFO - Job Scout finished. Processed 0 new jobs.
+2025-11-18 22:33:56,785 - personal_os - INFO - Agent Job Scout completed successfully.
+2025-11-18 22:33:56,796 - personal_os - INFO - Starting agent: Thread Spotter
+2025-11-18 22:33:56,808 - personal_os - INFO - Fetched 3 threads.
+2025-11-18 22:33:56,816 - personal_os - INFO - Thread Spotter finished. Processed 0 new threads.
+2025-11-18 22:33:56,823 - personal_os - INFO - Agent Thread Spotter completed successfully.
+2025-11-18 22:33:56,845 - personal_os - INFO - Starting agent: Orchestrator
+2025-11-18 22:33:56,867 - personal_os - INFO - Orchestrator found 2 new jobs and 2 new threads.
+2025-11-18 22:33:56,875 - personal_os - INFO - Daily plan generated at data/daily_plan.md
+2025-11-18 22:33:56,880 - personal_os - INFO - Agent Orchestrator completed successfully.
+2025-11-18 22:33:56,893 - personal_os - INFO - All agents finished.
+2025-11-18 22:37:40,002 - personal_os - INFO - Starting agent: Job Scout
+2025-11-18 22:37:40,022 - personal_os - INFO - Fetching We Work Remotely (RSS)...
+2025-11-18 22:37:41,317 - personal_os - INFO - Fetching Remotive (RSS)...
+2025-11-18 22:37:41,644 - personal_os - INFO - Fetching Real Work From Anywhere (RSS)...
+2025-11-18 22:37:43,438 - personal_os - INFO - Fetching RemoteOK (API)...
+2025-11-18 22:37:43,811 - personal_os - INFO - Fetching Jobicy (API)...
+2025-11-18 22:37:44,132 - personal_os - INFO - Fetching OpenWeb Ninja (API)...
+2025-11-18 22:37:45,726 - personal_os - ERROR - Failed to fetch API https://www.openwebninja.com/api/remote-jobs: Expecting value: line 1 column 1 (char 0)
+2025-11-18 22:37:45,744 - personal_os - INFO - Fetched 512 total jobs from feeds.
+2025-11-18 22:37:45,941 - personal_os - INFO - Found match: 'Full Stack Software Engineer' at CompassX Group (Score: 45)
+2025-11-18 22:37:45,996 - personal_os - INFO - Job Scout finished. Processed 512 new jobs.
+2025-11-18 22:37:45,998 - personal_os - INFO - Agent Job Scout completed successfully.
+2025-11-18 22:38:57,185 - personal_os - INFO - Running all agents...
+2025-11-18 22:38:57,189 - personal_os - INFO - Starting agent: Job Scout
+2025-11-18 22:38:57,207 - personal_os - INFO - Fetching We Work Remotely (RSS)...
+2025-11-18 22:38:58,033 - personal_os - INFO - Fetching Remotive (RSS)...
+2025-11-18 22:38:58,248 - personal_os - INFO - Fetching Real Work From Anywhere (RSS)...
+2025-11-18 22:38:59,773 - personal_os - INFO - Fetching RemoteOK (API)...
+2025-11-18 22:39:00,080 - personal_os - INFO - Fetching Jobicy (API)...
+2025-11-18 22:39:00,179 - personal_os - INFO - Fetching OpenWeb Ninja (API)...
+2025-11-18 22:39:00,346 - personal_os - ERROR - Failed to fetch API https://www.openwebninja.com/api/remote-jobs: Expecting value: line 1 column 1 (char 0)
+2025-11-18 22:39:00,352 - personal_os - INFO - Fetched 512 total jobs from feeds.
+2025-11-18 22:39:00,531 - personal_os - INFO - Job Scout finished. Processed 0 new jobs.
+2025-11-18 22:39:00,535 - personal_os - INFO - Agent Job Scout completed successfully.
+2025-11-18 22:39:00,544 - personal_os - INFO - Starting agent: Thread Spotter
+2025-11-18 22:39:00,552 - personal_os - INFO - Fetched 3 threads.
+2025-11-18 22:39:00,556 - personal_os - INFO - Thread Spotter finished. Processed 0 new threads.
+2025-11-18 22:39:00,558 - personal_os - INFO - Agent Thread Spotter completed successfully.
+2025-11-18 22:39:00,567 - personal_os - INFO - Starting agent: Orchestrator
+2025-11-18 22:39:00,579 - personal_os - INFO - Orchestrator found 3 new jobs and 2 new threads.
+2025-11-18 22:39:00,582 - personal_os - INFO - Daily plan generated at data/daily_plan.md
+2025-11-18 22:39:00,585 - personal_os - INFO - Agent Orchestrator completed successfully.
+2025-11-18 22:39:00,593 - personal_os - INFO - All agents finished.

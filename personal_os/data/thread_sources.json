@@ -1,0 +1,17 @@
+[
+  {
+    "name": "NoCode",
+    "url": "https://www.reddit.com/r/nocode/new.json",
+    "type": "Reddit"
+  },
+  {
+    "name": "Automation",
+    "url": "https://www.reddit.com/r/automation/new.json",
+    "type": "Reddit"
+  },
+  {
+    "name": "OpenAI",
+    "url": "https://www.reddit.com/r/openai/new.json",
+    "type": "Reddit"
+  }
+]

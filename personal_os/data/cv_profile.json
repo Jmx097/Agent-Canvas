@@ -1,0 +1,64 @@
+{
+  "target_titles": [
+    "solutions engineer",
+    "solutions consultant",
+    "implementation consultant",
+    "customer success engineer",
+    "technical consultant",
+    "pre-sales",
+    "presales",
+    "revenue operations",
+    "revops"
+  ],
+  "excluded_titles": [
+    "senior",
+    "sr.",
+    "lead",
+    "principal",
+    "staff",
+    "director",
+    "vp",
+    "vice president",
+    "head of",
+    "chief"
+  ],
+  "preferred_skills": [
+    "hubspot",
+    "crm",
+    "api",
+    "integration",
+    "automation",
+    "make.com",
+    "zapier",
+    "workflow",
+    "ai",
+    "saas",
+    "b2b",
+    "revenue operations",
+    "revops",
+    "gtm",
+    "go-to-market",
+    "implementation",
+    "onboarding",
+    "customer success",
+    "technical consulting",
+    "solutions engineering",
+    "no-code",
+    "low-code"
+  ],
+  "location_preferences": {
+    "primary": "remote",
+    "regions": ["united states", "u.s.", "usa", "north america", "canada"],
+    "excluded": ["on-site only", "hybrid required"]
+  },
+  "experience_level": {
+    "min_years": 0,
+    "max_years": 7,
+    "acceptable_levels": ["entry", "mid-level", "intermediate", "associate"]
+  },
+  "compensation": {
+    "min": 60000,
+    "max": 120000,
+    "currency": "USD"
+  }
+}

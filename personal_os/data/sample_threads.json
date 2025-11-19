@@ -1,0 +1,29 @@
+[
+  {
+    "id": "thread_001",
+    "title": "How do I automate client onboarding without coding?",
+    "platform": "Reddit",
+    "subreddit": "r/nocode",
+    "content": "I run a small agency and want to automate onboarding. What tools should I use?",
+    "comments_count": 5,
+    "url": "https://reddit.com/r/nocode/1"
+  },
+  {
+    "id": "thread_002",
+    "title": "Crypto is the future! Buy now!",
+    "platform": "Reddit",
+    "subreddit": "r/crypto",
+    "content": "To the moon!",
+    "comments_count": 100,
+    "url": "https://reddit.com/r/crypto/1"
+  },
+  {
+    "id": "thread_003",
+    "title": "Best way to structure a Make.com scenario for error handling?",
+    "platform": "Skool",
+    "subreddit": "Automators",
+    "content": "I keep getting errors in my scenario. How do you handle rollbacks?",
+    "comments_count": 0,
+    "url": "https://skool.com/automators/1"
+  }
+]

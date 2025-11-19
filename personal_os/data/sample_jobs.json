@@ -1,0 +1,26 @@
+[
+  {
+    "id": "job_001",
+    "title": "Solutions Consultant",
+    "company": "TechFlow AI",
+    "location": "Remote",
+    "description": "We are looking for a Solutions Consultant to help implement our AI workflow automation tools. Salary: $75k - $90k.",
+    "url": "https://example.com/job1"
+  },
+  {
+    "id": "job_002",
+    "title": "Senior Sales Engineer",
+    "company": "BigCorp",
+    "location": "New York (Hybrid)",
+    "description": "Enterprise sales engineering role. Heavy travel required. Quota driven.",
+    "url": "https://example.com/job2"
+  },
+  {
+    "id": "job_003",
+    "title": "Implementation Specialist",
+    "company": "NoCode Hero",
+    "location": "Remote",
+    "description": "Help clients build workflows in Make and Zapier. Early stage startup. $70k base.",
+    "url": "https://example.com/job3"
+  }
+]
