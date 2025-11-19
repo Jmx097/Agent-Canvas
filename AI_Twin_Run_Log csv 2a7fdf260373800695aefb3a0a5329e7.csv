@@ -1,0 +1,3 @@
+﻿Name,Track,Lead Name,Status,Input Tokens,Output Tokens,Cost (USD),Time Saved (min),Replies (#),Booked Calls (#),Revenue (USD),Build Time (hrs),Hourly Rate ($/hr),Notes
+Run — Reactivation — ACME — 2025-11-10,Reactivation,ACME Corp — Dana,Draft,1150,420,0.01,12,0,0,0,1,85,First pass draft created; awaiting approval.
+Run — Proposal — Timberline Tax — 2025-11-10,Proposal,Timberline Tax — Dave,Approved,980,510,0.01,18,1,1,0,1.5,85,Approved and sent; booked a 15-min call.
