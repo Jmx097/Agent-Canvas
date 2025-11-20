@@ -26,38 +26,36 @@ def get_plan():
         return {"content": "No plan generated yet."}
     return {"content": plan_path.read_text(encoding="utf-8")}
 
+@app.get("/api/jobs")
+def get_jobs():
+    from db.database import SessionLocal
+    from db.models import ScoredItem
+    db = SessionLocal()
+    try:
+        top_jobs = db.query(ScoredItem).filter_by(
+            type="JOB", 
+            status="NEW"
+        ).order_by(ScoredItem.score.desc()).limit(10).all()
+        
+        jobs_data = [{
+            "id": job.id,
+            "title": job.title,
+            "score": job.score,
+            "score_details": job.score_details,
+            "content_summary": job.content_summary,
+            "created_at": job.created_at.isoformat()
+        } for job in top_jobs]
+        
+        return {"jobs": jobs_data}
+    finally:
+        db.close()
+
 @app.post("/api/run/{agent_name}")
 def run_agent(agent_name: str):
     try:
         if agent_name == "job-scout":
             JobScoutAgent().execute()
-            # Return top 10 jobs after execution
-            from db.database import SessionLocal
-            from db.models import ScoredItem
-            db = SessionLocal()
-            try:
-                top_jobs = db.query(ScoredItem).filter_by(
-                    type="JOB", 
-                    status="NEW"
-                ).order_by(ScoredItem.score.desc()).limit(10).all()
-                
-                jobs_data = [{
-                    "id": job.id,
-                    "title": job.title,
-                    "score": job.score,
-                    "score_details": job.score_details,
-                    "content_summary": job.content_summary,
-                    "created_at": job.created_at.isoformat()
-                } for job in top_jobs]
-                
-                return {
-                    "status": "success", 
-                    "message": f"Job Scout executed. Found {len(jobs_data)} matching jobs.",
-                    "jobs": jobs_data
-                }
-            finally:
-                db.close()
-                
+            return {"status": "success", "message": "Job Scout finished processing CSV."}
         elif agent_name == "thread-spotter":
             ThreadSpotterAgent().execute()
         elif agent_name == "orchestrator":

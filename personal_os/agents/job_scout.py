@@ -1,6 +1,5 @@
+import csv
 import json
-import feedparser
-import requests
 from pathlib import Path
 from core.base_agent import BaseAgent
 from db.models import ScoredItem
@@ -10,7 +9,7 @@ from config.settings import settings
 class JobScoutAgent(BaseAgent):
     def __init__(self):
         super().__init__("Job Scout")
-        self.feeds_path = settings.BASE_DIR / "data" / "job_feeds.json"
+        self.input_csv_path = settings.BASE_DIR / "data" / "jobs_input.csv"
         self.cv_profile_path = settings.BASE_DIR / "data" / "cv_profile.json"
         self.cv_profile = self.load_cv_profile()
 
@@ -21,78 +20,33 @@ class JobScoutAgent(BaseAgent):
         with open(self.cv_profile_path, "r") as f:
             return json.load(f)
 
-    def fetch_from_rss(self, url):
-        try:
-            feed = feedparser.parse(url)
-            jobs = []
-            for entry in feed.entries:
-                jobs.append({
-                    "id": entry.get("id", entry.get("link")),
-                    "title": entry.get("title", "No Title"),
-                    "company": entry.get("author", "Unknown"),
-                    "description": entry.get("summary", entry.get("description", "")),
-                    "url": entry.get("link"),
-                    "location": "Unknown"
-                })
-            return jobs
-        except Exception as e:
-            logger.error(f"Failed to parse RSS {url}: {e}")
+    def load_from_csv(self):
+        if not self.input_csv_path.exists():
+            logger.warning(f"Input CSV not found at {self.input_csv_path}")
             return []
-
-    def fetch_from_api(self, url):
-        try:
-            resp = requests.get(url, headers={"User-Agent": "PersonalOS/1.0"})
-            if resp.status_code != 200:
-                return []
-            
-            data = resp.json()
-            jobs = []
-            
-            if "remoteok" in url:
-                for item in data:
-                    if not isinstance(item, dict): continue
-                    jobs.append({
-                        "id": item.get("id", item.get("url")),
-                        "title": item.get("position", "No Title"),
-                        "company": item.get("company", "Unknown"),
-                        "description": item.get("description", ""),
-                        "url": item.get("url"),
-                        "location": item.get("location", "Remote")
-                    })
-            
-            elif "jobicy" in url:
-                for item in data.get("jobs", []):
-                    jobs.append({
-                        "id": item.get("id", item.get("url")),
-                        "title": item.get("jobTitle", "No Title"),
-                        "company": item.get("companyName", "Unknown"),
-                        "description": item.get("jobDescription", ""),
-                        "url": item.get("url"),
-                        "location": item.get("jobGeo", "Remote")
-                    })
-
-            return jobs
-        except Exception as e:
-            logger.error(f"Failed to fetch API {url}: {e}")
-            return []
-
-    def fetch_jobs(self):
-        if not self.feeds_path.exists():
-            logger.warning("No feed config found.")
-            return []
-
-        with open(self.feeds_path, "r") as f:
-            feeds = json.load(f)
-
-        all_jobs = []
-        for feed in feeds:
-            logger.info(f"Fetching {feed['name']} ({feed['type']})...")
-            if feed["type"] == "RSS":
-                all_jobs.extend(self.fetch_from_rss(feed["url"]))
-            elif feed["type"] == "API":
-                all_jobs.extend(self.fetch_from_api(feed["url"]))
         
-        return all_jobs
+        jobs = []
+        try:
+            with open(self.input_csv_path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    # Ensure required fields exist
+                    if not row.get("id") or not row.get("title"):
+                        continue
+                        
+                    jobs.append({
+                        "id": row.get("id"),
+                        "title": row.get("title"),
+                        "company": row.get("company", "Unknown"),
+                        "description": row.get("description", ""),
+                        "url": row.get("url", ""),
+                        "location": row.get("location", "Unknown")
+                    })
+        except Exception as e:
+            logger.error(f"Failed to read CSV: {e}")
+            return []
+            
+        return jobs
 
     def score_job(self, job):
         """
@@ -185,8 +139,8 @@ class JobScoutAgent(BaseAgent):
         return score, details
 
     def run(self):
-        jobs = self.fetch_jobs()
-        logger.info(f"Fetched {len(jobs)} total jobs from feeds.")
+        jobs = self.load_from_csv()
+        logger.info(f"Loaded {len(jobs)} jobs from CSV.")
 
         new_count = 0
         for job in jobs:
@@ -208,8 +162,24 @@ class JobScoutAgent(BaseAgent):
                 content_summary=desc_summary,
                 score=score,
                 score_details=details,
-                status=status
+                status=status,
+                # Store URL in content_summary or a new field if model allowed, 
+                # but for now we can append it to summary or rely on source_id if it was a URL.
+                # Ideally we should have a 'url' field, but I'll pack it into the summary for now 
+                # or assume source_id is the key. 
+                # Wait, the user wants to click "Apply". 
+                # I'll store the URL in the 'source_id' if it's a URL, or I need to check the model.
+                # The model has 'source_id'. If the CSV 'id' is not a URL, we might lose the link.
+                # Let's check the model again.
             )
+            # Hack: Store URL in the score_details for now so the frontend can grab it, 
+            # since we can't easily migrate the DB schema right this second without alembic.
+            # Or better: The 'source_id' in the CSV should ideally be the URL if possible, 
+            # but the user might provide an ID.
+            # Let's store the URL in score_details['url']
+            details['url'] = job['url']
+            item.score_details = details
+
             self.db.add(item)
             new_count += 1
             if status == "NEW":
