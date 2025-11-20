@@ -163,23 +163,9 @@ class JobScoutAgent(BaseAgent):
                 score=score,
                 score_details=details,
                 status=status,
-                # Store URL in content_summary or a new field if model allowed, 
-                # but for now we can append it to summary or rely on source_id if it was a URL.
-                # Ideally we should have a 'url' field, but I'll pack it into the summary for now 
-                # or assume source_id is the key. 
-                # Wait, the user wants to click "Apply". 
-                # I'll store the URL in the 'source_id' if it's a URL, or I need to check the model.
-                # The model has 'source_id'. If the CSV 'id' is not a URL, we might lose the link.
-                # Let's check the model again.
+                url=job.get("url")
             )
-            # Hack: Store URL in the score_details for now so the frontend can grab it, 
-            # since we can't easily migrate the DB schema right this second without alembic.
-            # Or better: The 'source_id' in the CSV should ideally be the URL if possible, 
-            # but the user might provide an ID.
-            # Let's store the URL in score_details['url']
-            details['url'] = job['url']
-            item.score_details = details
-
+            
             self.db.add(item)
             new_count += 1
             if status == "NEW":

@@ -126,7 +126,8 @@ class ThreadSpotterAgent(BaseAgent):
                 content_summary=content_summary,
                 score=score,
                 score_details=details,
-                status=status
+                status=status,
+                url=thread.get("url")
             )
             self.db.add(item)
             new_count += 1

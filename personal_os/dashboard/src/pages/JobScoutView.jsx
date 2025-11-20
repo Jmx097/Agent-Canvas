@@ -117,10 +117,10 @@ const JobScoutView = () => {
 
                 <p className="job-summary">{job.content_summary}</p>
                 
-                {job.score_details?.url && (
+                {job.url && (
                 <div style={{ marginTop: '1rem' }}>
                     <a 
-                    href={job.score_details.url} 
+                    href={job.url} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="btn btn-secondary"

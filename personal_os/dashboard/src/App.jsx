@@ -3,22 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import DashboardHome from './pages/DashboardHome';
 import JobScoutView from './pages/JobScoutView';
+import ThreadSpotterView from './pages/ThreadSpotterView';
+import OrchestratorView from './pages/OrchestratorView';
 import './App.css';
-
-// Placeholder components for other agents
-const ThreadSpotterView = () => (
-  <div className="glass-card">
-    <h2 className="card-title">Thread Spotter</h2>
-    <p style={{ color: 'var(--text-muted)' }}>Coming soon...</p>
-  </div>
-);
-
-const OrchestratorView = () => (
-  <div className="glass-card">
-    <h2 className="card-title">Orchestrator</h2>
-    <p style={{ color: 'var(--text-muted)' }}>Coming soon...</p>
-  </div>
-);
 
 function App() {
   return (

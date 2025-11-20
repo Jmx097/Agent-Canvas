@@ -14,31 +14,23 @@ class OrchestratorAgent(BaseAgent):
 
         logger.info(f"Orchestrator found {len(new_jobs)} new jobs and {len(new_threads)} new threads.")
 
-        # 2. Generate Plan
-        plan = f"# Daily Workbench Plan - {datetime.now().strftime('%Y-%m-%d')}\n\n"
-
-        # Block 1: Job Search
-        plan += "## Block 1: Job Search Deep Work (90 mins)\n"
+        # 2. Generate Plan via LLM
+        from core.llm import call_llm
+        
+        context = f"Found {len(new_jobs)} new jobs and {len(new_threads)} new threads.\n"
         if new_jobs:
-            for job in new_jobs:
-                plan += f"- [ ] Review: {job.title} (Score: {job.score})\n"
-        else:
-            plan += "- No new high-scoring jobs today.\n"
-        plan += "\n"
-
-        # Block 2: Content & Community
-        plan += "## Block 2: Content & Community (60 mins)\n"
-        if new_threads:
-            for thread in new_threads:
-                plan += f"- [ ] Reply to: {thread.title} (Score: {thread.score})\n"
-        else:
-            plan += "- No new threads to engage with.\n"
-        plan += "\n"
-
-        # Block 3: Admin
-        plan += "## Block 3: Admin & Learning (45 mins)\n"
-        plan += "- [ ] Clear inbox\n"
-        plan += "- [ ] Update run-logs\n"
+            context += "Top Job: " + new_jobs[0].title + "\n"
+        
+        prompt = f"""
+        You are the Orchestrator for a Personal OS.
+        Context: {context}
+        
+        Generate a daily plan in Markdown format.
+        Include 3 blocks: Deep Work, Content/Community, and Admin.
+        """
+        
+        response = call_llm(prompt)
+        plan = response.content if hasattr(response, 'content') else str(response)
 
         # 3. Save Plan
         with open("data/daily_plan.md", "w") as f:

@@ -1,88 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
-
-const API_BASE = "http://localhost:8000/api";
+import React, { useEffect, useState } from 'react';
+import ChatWidget from '../components/ChatWidget';
+import { BentoCard } from '../components/bento/BentoCard';
 
 const DashboardHome = () => {
-  const [plan, setPlan] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const [events, setEvents] = useState([]);
 
-  const fetchPlan = async () => {
-    setLoading(true);
-    try {
-      // In a real app, we might have a specific endpoint for just the plan
-      // For now, we'll simulate or reuse the orchestrator run if needed, 
-      // but ideally we just want to fetch the *current* plan.
-      // Since the original app didn't have a "get plan" endpoint separate from running,
-      // we might need to adjust the backend or just show a placeholder if empty.
-      // Let's assume we can get it or it's stored. 
-      // For this refactor, I'll keep the "Refresh Plan" button logic.
-      setStatus("Ready");
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const runOrchestrator = async () => {
-    setLoading(true);
-    setStatus("Running Orchestrator...");
-    try {
-      const res = await fetch(`${API_BASE}/run/orchestrator`, { method: "POST" });
-      const data = await res.json();
-      setStatus(data.message);
-      setPlan(data.result || "Plan updated. Check logs."); // Adjust based on actual API response
-    } catch (err) {
-      console.error(err);
-      setStatus("Failed to run Orchestrator.");
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  // Initial fetch
   useEffect(() => {
-      // If we had a persistence layer, we'd fetch here.
+    fetch('http://localhost:8000/api/tasks')
+      .then(res => res.json())
+      .then(data => setTasks(data.tasks || []))
+      .catch(err => console.error("Failed to fetch tasks", err));
+
+    fetch('http://localhost:8000/api/calendar')
+      .then(res => res.json())
+      .then(data => setEvents(data.events || []))
+      .catch(err => console.error("Failed to fetch calendar", err));
   }, []);
 
   return (
-    <div className="dashboard-home">
-      <header className="page-header">
-        <h1 className="page-title">Command Center</h1>
-        <p className="page-subtitle">Overview of your Personal OS activity</p>
+    <div className="space-y-8 relative z-10 max-w-7xl mx-auto">
+      <header className="mb-12 text-center">
+        <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 tracking-tight">
+          Command Center
+        </h1>
+        <p className="text-white/60 mt-4 text-lg">Your Personal OS is online and monitoring.</p>
       </header>
 
-      <div className="glass-card">
-        <div className="card-header">
-          <h2 className="card-title">Daily Plan</h2>
-          <button 
-            className="btn btn-primary" 
-            onClick={runOrchestrator}
-            disabled={loading}
-          >
-            {loading ? "Updating..." : "Generate Plan"}
-          </button>
-        </div>
-        
-        <div className="markdown-body">
-          {plan ? (
-            <ReactMarkdown>{plan}</ReactMarkdown>
-          ) : (
-            <p className="text-muted">No plan generated yet. Run the Orchestrator to get started.</p>
-          )}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Tasks Widget */}
+        <BentoCard 
+            title="Active Tasks" 
+            icon="✅" 
+            className="min-h-[300px]"
+        >
+          <div className="space-y-3 mt-2">
+            {tasks.length === 0 ? (
+              <p className="text-white/40 italic">No active tasks.</p>
+            ) : (
+              tasks.map(task => (
+                <div key={task.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors border border-white/5">
+                  <span className="text-white/90">{task.title}</span>
+                  <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-300 rounded border border-blue-500/30">{task.status}</span>
+                </div>
+              ))
+            )}
+          </div>
+        </BentoCard>
+
+        {/* Calendar Widget */}
+        <BentoCard 
+            title="Schedule" 
+            icon="📅" 
+            className="min-h-[300px]"
+        >
+          <div className="space-y-3 mt-2">
+            {events.length === 0 ? (
+              <p className="text-white/40 italic">No upcoming events.</p>
+            ) : (
+              events.map(event => (
+                <div key={event.id} className="p-3 bg-white/5 rounded-lg border-l-2 border-purple-500 hover:bg-white/10 transition-colors">
+                  <div className="font-medium text-white/90">{event.title}</div>
+                  <div className="text-sm text-white/50 mt-1">
+                    {new Date(event.start).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - 
+                    {new Date(event.end).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </BentoCard>
       </div>
-      
-      <div className="glass-card">
-        <div className="card-header">
-            <h2 className="card-title">System Status</h2>
-        </div>
-        <div style={{ color: 'var(--text-muted)' }}>
-            Status: <span style={{ color: 'var(--primary-cyan)' }}>{status || "Idle"}</span>
-        </div>
-      </div>
+
+      <ChatWidget />
     </div>
   );
 };

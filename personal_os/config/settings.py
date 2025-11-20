@@ -5,8 +5,8 @@ class Settings(BaseSettings):
     BASE_DIR: Path = Path(__file__).parent.parent
     
     # LLM
-    LLM_API_KEY: str = "mock_key"
-    LLM_MODEL: str = "gemini-pro"
+    OPENAI_API_KEY: str = "mock_key"  # Set in .env
+    LLM_MODEL: str = "gpt-4o"
 
     # Database
     DB_URL: str = "sqlite:///personal_os.db"
